@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Colour tokens are space-separated RGB triplets so Tailwind can apply opacity. */
+:root,
+:root[data-theme='dark'] {
+  --c-page: 48 46 43;
+  --c-panel: 38 37 34;
+  --c-deep: 33 32 29;
+  --c-raised: 61 59 56;
+  --c-line: 58 56 53;
+  --c-ink: 255 255 255;
+  --c-muted: 195 194 193;
+  --c-subtle: 152 151 149;
+  --c-primary-400: 163 209 96;
+  --c-primary-500: 129 182 76;
+  --c-primary-600: 69 117 60;
+  --c-error-400: 250 65 45;
+  --c-error-500: 202 52 49;
+  --c-accent-500: 229 143 42;
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --c-page: 236 235 233;
+  --c-panel: 255 255 255;
+  --c-deep: 246 245 243;
+  --c-raised: 238 237 234;
+  --c-line: 222 220 216;
+  --c-ink: 38 37 34;
+  --c-muted: 98 96 92;
+  --c-subtle: 138 136 132;
+  --c-primary-400: 86 138 46;
+  --c-primary-500: 129 182 76;
+  --c-primary-600: 69 117 60;
+  --c-error-400: 202 52 49;
+  --c-error-500: 202 52 49;
+  --c-accent-500: 214 120 20;
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-page font-sans text-ink antialiased;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--c-raised)) transparent;
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-primary-400));
+    outline-offset: 2px;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-lg bg-panel;
+  }
+  .panel-header {
+    @apply flex items-center justify-between gap-2 border-b border-line px-4 py-3 text-sm font-bold text-ink;
+  }
+
+  /* The thick bottom edge is the signature Chess.com call-to-action button. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary-500 px-5 py-2.5 text-[15px] font-extrabold text-white;
+    box-shadow: 0 4px 0 rgb(var(--c-primary-600));
+    transition: background-color 120ms, transform 80ms, box-shadow 80ms;
+  }
+  .btn-primary:hover:not(:disabled) {
+    @apply bg-primary-400;
+  }
+  .btn-primary:active:not(:disabled) {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgb(var(--c-primary-600));
+  }
+  .btn-primary:disabled {
+    @apply opacity-50;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-raised px-3.5 py-2 text-sm font-bold text-ink transition-colors hover:bg-line;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-md text-muted transition-colors hover:bg-raised hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent;
+  }
+  .btn-tool {
+    @apply inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 text-xs font-semibold text-muted sm:px-2.5 transition-colors hover:bg-panel hover:text-ink;
+  }
+
+  .field {
+    @apply w-full rounded-lg border border-line bg-page px-3 py-2 text-ink placeholder:text-subtle focus:border-primary-500 focus:outline-none;
+  }
+
+  .modal-backdrop {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4;
+  }
+  .modal-card {
+    @apply max-h-[90vh] w-full overflow-hidden rounded-xl border border-line bg-panel shadow-2xl;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
