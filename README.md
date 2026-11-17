@@ -8,7 +8,7 @@ Paste a PGN from Chess.com or Lichess and get a Chess.com-style Game Review:
 move-by-move classifications, accuracy scores, evaluation graph, and engine lines.
 No server, no account, no moves leaving your machine.
 
-[Live demo](#) · [Report a bug](/.github/ISSUE_TEMPLATE/bug_report.md) · [Request a feature](/.github/ISSUE_TEMPLATE/feature_request.md)
+[Live demo](https://lucky04io.github.io/free-review/) · [Report a bug](.github/ISSUE_TEMPLATE/bug_report.md) · [Request a feature](.github/ISSUE_TEMPLATE/feature_request.md)
 
 ![React](https://img.shields.io/badge/React-18-61dafb?logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)
@@ -55,8 +55,8 @@ No server, no account, no moves leaving your machine.
 ## Getting started
 
 ```bash
-git clone https://github.com/<your-user>/chesssight.git
-cd chesssight
+git clone https://github.com/lucky04io/free-review.git
+cd free-review
 npm install
 npm run dev
 ```
@@ -107,9 +107,9 @@ The app is a static site. A GitHub Actions workflow (`.github/workflows/deploy.y
 
 1. Push the repo to GitHub.
 2. In the repository settings, set **Pages → Source: GitHub Actions**.
-3. Push to `main` — the site goes live at `https://<user>.github.io/chesssight/`.
+3. Push to `main` — the site goes live at `https://lucky04io.github.io/free-review/`.
 
-The Pages build sets `GITHUB_PAGES=true` so Vite uses the `/chesssight/` base path; locally and elsewhere it stays at `/`.
+The Pages build sets `GITHUB_PAGES=true` so Vite uses the `/free-review/` base path; locally and elsewhere it stays at `/`.
 
 ## Contributing
 

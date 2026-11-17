@@ -4,7 +4,7 @@ import { fileURLToPath, URL } from 'node:url';
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
-  base: process.env.GITHUB_PAGES === 'true' ? '/chesssight/' : '/',
+  base: process.env.GITHUB_PAGES === 'true' ? '/free-review/' : '/',
   plugins: [react()],
   resolve: {
     alias: {
