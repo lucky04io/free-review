@@ -7,7 +7,7 @@ export const DEFAULT_SETTINGS: Settings = {
   theme: 'dark',
   boardTheme: 'green',
   pieceSet: 'classic',
-  depth: 18,
+  depth: 14,
   autoplayMs: 1200,
 };
 
@@ -16,7 +16,10 @@ function loadSettings(): Settings {
     const raw = localStorage.getItem(SETTINGS_KEY);
     if (!raw) return DEFAULT_SETTINGS;
     const parsed = JSON.parse(raw) as Partial<Settings>;
-    return { ...DEFAULT_SETTINGS, ...parsed };
+    // Existing installs persisted the old default of 18. Move those users to
+    // the faster default while preserving any other saved preferences.
+    const depth = parsed.depth === 18 ? DEFAULT_SETTINGS.depth : parsed.depth;
+    return { ...DEFAULT_SETTINGS, ...parsed, depth };
   } catch {
     return DEFAULT_SETTINGS;
   }

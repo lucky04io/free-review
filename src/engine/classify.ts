@@ -13,7 +13,7 @@ export interface ClassificationMeta {
 }
 
 export const CLASSIFICATION_META: Record<Classification, ClassificationMeta> = {
-  brilliant: { label: 'Brilliant', color: '#26c2a2', glyph: '!!', description: 'A sacrifice that is the only strong move in a complex position.' },
+  brilliant: { label: 'Brilliant', color: '#26c2a2', glyph: '!!', description: 'A sound sacrifice that creates a major evaluation swing.' },
   great: { label: 'Great', color: '#5c8bb0', glyph: '!', description: 'The only good move in a sharp position.' },
   best: { label: 'Best', color: '#96bc4b', icon: 'star', description: 'Matches the engine top choice.' },
   excellent: { label: 'Excellent', color: '#7fb04b', icon: 'thumbs-up', description: 'Loses at most 10 centipawns.' },
@@ -43,6 +43,7 @@ interface ClassifyContext {
   missedMate: boolean;
   cpLoss: number;
   cpBefore: number;
+  evaluationGain: number;
   prevCpLoss: number;
   gap: number | null;
 }
@@ -50,6 +51,7 @@ interface ClassifyContext {
 function classifyMove(c: ClassifyContext): Classification {
   if (c.isBook) return 'book';
   if (c.missedMate) return 'blunder';
+  if (c.sacrifice && c.evaluationGain >= 100 && c.cpLoss <= 10) return 'brilliant';
   if (c.isBest) {
     if (c.sacrifice && c.gap !== null && c.gap >= 50) return 'brilliant';
     if (c.gap !== null && c.gap >= 150) return 'great';
@@ -82,10 +84,11 @@ export function buildGameAnalysis(game: ParsedGame, positions: PositionEval[], d
     const classification = classifyMove({
       isBook: opening !== null && i < opening.bookLength,
       isBest,
-      sacrifice: isBest && isSacrifice(move, game.moves[i - 1]),
+      sacrifice: isSacrifice(move, game.moves[i - 1]),
       missedMate: cpBefore >= MATE_THRESHOLD && cpAfter < MATE_THRESHOLD && !isBest,
       cpLoss,
       cpBefore,
+      evaluationGain: cpAfter - cpBefore,
       prevCpLoss,
       gap,
     });
