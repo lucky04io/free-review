@@ -18,7 +18,9 @@ function loadSettings(): Settings {
     const parsed = JSON.parse(raw) as Partial<Settings>;
     // Existing installs persisted the old default of 18. Move those users to
     // the faster default while preserving any other saved preferences.
-    const depth = parsed.depth === 18 ? DEFAULT_SETTINGS.depth : parsed.depth;
+    const depth = parsed.depth === undefined || parsed.depth === 18
+      ? DEFAULT_SETTINGS.depth
+      : parsed.depth;
     return { ...DEFAULT_SETTINGS, ...parsed, depth };
   } catch {
     return DEFAULT_SETTINGS;
